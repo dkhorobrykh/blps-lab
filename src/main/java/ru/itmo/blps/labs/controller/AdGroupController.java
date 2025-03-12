@@ -6,10 +6,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.itmo.blps.labs.domain.dto.AdGroupDto;
 import ru.itmo.blps.labs.domain.mapper.AdGroupMapper;
+import ru.itmo.blps.labs.service.AdCampaignService;
 import ru.itmo.blps.labs.service.AdGroupService;
 
 @RestController
@@ -27,7 +29,7 @@ public class AdGroupController {
     }
 
     @PostMapping
-    public ResponseEntity<AdGroupDto> createAdGroup(AdGroupDto adGroupDto) {
+    public ResponseEntity<AdGroupDto> createAdGroup(@RequestBody AdGroupDto adGroupDto) {
         var result = adGroupService.create(adGroupMapper.toEntity(adGroupDto));
         return ResponseEntity.ok(adGroupMapper.toDto(result));
     }

@@ -1,5 +1,6 @@
 package ru.itmo.blps.labs.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -40,7 +41,8 @@ public class AdCampaign {
     @JoinColumn(name = "ad_type_name", nullable = false)
     private AdType adType;
 
-    private Integer limit;
+    @Column(name = "limit_budget")
+    private Integer limitBudget;
 
     private Instant startDate;
 

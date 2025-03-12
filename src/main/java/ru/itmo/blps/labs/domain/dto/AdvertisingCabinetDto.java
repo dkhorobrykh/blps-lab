@@ -16,15 +16,15 @@ public class AdvertisingCabinetDto implements Serializable {
 
     @Schema(accessMode = AccessMode.READ_ONLY)
     Long id;
-//    @Schema(defaultValue = "ADVERTISER")
+    @Schema(defaultValue = "ADVERTISER")
     AdvertisingCabinetType type;
-//    @Schema(defaultValue = "RU")
+    @Schema(defaultValue = "RU")
     String country;
-//    @Schema(defaultValue = "RUB")
+    @Schema(defaultValue = "RUB")
     String currency;
-//    @Schema(defaultValue = "primer@example.com")
+    @Schema(defaultValue = "primer@example.com")
     String email;
-//    @Schema(defaultValue = "INDIVIDUAL")
+    @Schema(defaultValue = "INDIVIDUAL")
     AdvertisingCabinetOwnerType ownerType;
     String inn;
     String fullName;

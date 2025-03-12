@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.itmo.blps.labs.domain.AnnouncementStatus;
@@ -28,7 +29,7 @@ public class AnnouncementController {
     }
 
     @PostMapping("draft")
-    public ResponseEntity<AnnouncementDto> createAnnouncementAsDraft(AnnouncementDto announcementDto) {
+    public ResponseEntity<AnnouncementDto> createAnnouncementAsDraft(@RequestBody AnnouncementDto announcementDto) {
         var result = announcementService.createAnnouncement(announcementMapper.toEntity(announcementDto),
             AnnouncementStatus.DRAFT
         );
@@ -36,7 +37,7 @@ public class AnnouncementController {
     }
 
     @PostMapping("created")
-    public ResponseEntity<AnnouncementDto> createAnnouncementAsCreated(AnnouncementDto announcementDto) {
+    public ResponseEntity<AnnouncementDto> createAnnouncementAsCreated(@RequestBody AnnouncementDto announcementDto) {
         var result = announcementService.createAnnouncement(announcementMapper.toEntity(announcementDto),
             AnnouncementStatus.CREATED
         );

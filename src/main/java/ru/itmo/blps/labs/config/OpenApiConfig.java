@@ -18,19 +18,17 @@ public class OpenApiConfig {
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
-//            .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
-//            .components(new Components().addSecuritySchemes(
-//                "bearerAuth",
-//                new SecurityScheme()
-//                    .name("bearerAuth")
-//                    .type(SecurityScheme.Type.HTTP)
-//                    .scheme("Bearer")
-//                    .bearerFormat("JWT")
-//            ))
+            .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
+            .components(new Components().addSecuritySchemes(
+                "bearerAuth",
+                new SecurityScheme()
+                    .name("bearerAuth")
+                    .type(SecurityScheme.Type.HTTP)
+                    .scheme("Bearer")
+                    .bearerFormat("JWT")
+            ))
             .info(new Info()
-                .title("Directory Management Service")
-                .description("This is a sample Spring Boot RESTful service using springdoc-openapi and OpenAPI 3.")
+                .title("BLPS lab #1")
                 .version("1.0.0"));
-//            .servers(List.of(server));
     }
 }

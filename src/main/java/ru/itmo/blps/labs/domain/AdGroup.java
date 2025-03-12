@@ -44,7 +44,6 @@ public class AdGroup {
 
     private Integer maxAge;
 
-    @Column(columnDefinition = "JSONB")
     @Convert(converter = AdGroupTargetingConverter.class)
     private List<String> interests;
 

@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.itmo.blps.labs.domain.AdCampaign;
+import ru.itmo.blps.labs.exception.CustomException;
+import ru.itmo.blps.labs.exception.ExceptionEnum;
 import ru.itmo.blps.labs.repository.AdCampaignRepository;
 
 @Service
@@ -13,14 +15,23 @@ import ru.itmo.blps.labs.repository.AdCampaignRepository;
 public class AdCampaignService {
 
     private final AdCampaignRepository adCampaignRepository;
+    private final AdTypeService adTypeService;
+    private final AdGoalService adGoalService;
 
     public AdCampaign createCampaign(AdCampaign adCampaign) {
-        log.info("Creating campaign: {}", adCampaign);
+        adCampaign.setOwnerId(AuthService.getCurrentUserId());
+        var adType = adTypeService.getAdType(adCampaign.getAdType().getName());
+        adCampaign.setAdType(adType);
+        var adGoal = adGoalService.getByName(adCampaign.getAdGoal().getName());
+        adCampaign.setAdGoal(adGoal);
         return adCampaignRepository.save(adCampaign);
     }
 
     public List<AdCampaign> getCampaignsByUserId(Long userId) {
-        log.info("Getting campaigns by user id: {}", userId);
         return adCampaignRepository.findByOwnerId(userId);
+    }
+
+    public AdCampaign getById(Long id) {
+        return adCampaignRepository.findById(id).orElseThrow(() -> new CustomException(ExceptionEnum.NOT_FOUND));
     }
 }

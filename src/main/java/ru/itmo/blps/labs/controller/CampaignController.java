@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.itmo.blps.labs.domain.AdCampaign;
@@ -22,7 +23,7 @@ public class CampaignController {
     private final AdCampaignService adCampaignService;
 
     @PostMapping
-    public ResponseEntity<AdCampaignDto> createCampaign(AdCampaignDto adCampaignDto) {
+    public ResponseEntity<AdCampaignDto> createCampaign(@RequestBody AdCampaignDto adCampaignDto) {
         var result = adCampaignService.createCampaign(adCampaignMapper.toEntity(adCampaignDto));
         return ResponseEntity.ok(adCampaignMapper.toDto(result));
     }

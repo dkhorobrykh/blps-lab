@@ -1,6 +1,7 @@
 package ru.itmo.blps.labs.domain.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
 import java.io.Serializable;
 import java.util.List;
 import lombok.Value;
@@ -20,4 +21,6 @@ public class AdGroupDto implements Serializable {
     List<String> interests;
     boolean isAllowDesktop;
     boolean isAllowMobile;
+    @Schema(accessMode = AccessMode.WRITE_ONLY)
+    Long campaignId;
 }

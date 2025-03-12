@@ -19,7 +19,7 @@ public class AdvertisingCabinetService {
     }
 
     public AdvertisingCabinet create(AdvertisingCabinet advertisingCabinet) {
-        // todo: валидация данных
+        advertisingCabinet.setOwnerId(AuthService.getCurrentUserId());
         return advertisingCabinetRepository.save(advertisingCabinet);
     }
 }

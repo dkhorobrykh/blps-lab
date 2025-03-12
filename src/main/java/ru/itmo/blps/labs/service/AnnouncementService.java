@@ -6,6 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.itmo.blps.labs.domain.Announcement;
 import ru.itmo.blps.labs.domain.AnnouncementStatus;
+import ru.itmo.blps.labs.exception.CustomException;
+import ru.itmo.blps.labs.exception.ExceptionEnum;
 import ru.itmo.blps.labs.repository.AnnouncementRepository;
 
 @Service
@@ -14,6 +16,7 @@ import ru.itmo.blps.labs.repository.AnnouncementRepository;
 public class AnnouncementService {
 
     private final AnnouncementRepository announcementRepository;
+    private final AdGroupService groupService;
 
     public List<Announcement> getAnnouncementsByGroupId(Long groupId) {
         return announcementRepository.findAllByGroupId(groupId);
@@ -21,12 +24,20 @@ public class AnnouncementService {
 
     public Announcement createAnnouncement(Announcement announcement, AnnouncementStatus status) {
         announcement.setStatus(status);
+        var group = groupService.getById(announcement.getGroup().getId());
+        announcement.setGroup(group);
         return announcementRepository.save(announcement);
     }
 
     public Announcement approveByUser(Long announcementId) {
-        var announcement = announcementRepository.findById(announcementId).orElseThrow();
+        var announcement = announcementRepository.findById(announcementId).orElseThrow(() -> new CustomException(
+            ExceptionEnum.NOT_FOUND));
+        if (announcement.getStatus() != AnnouncementStatus.CREATED) {
+            throw new CustomException(ExceptionEnum.ANNOUNCEMENT_IS_NOT_IN_CREATED_STATUS);
+        }
         announcement.setStatus(AnnouncementStatus.MODERATION);
+        var group = groupService.getById(announcement.getGroup().getId());
+        announcement.setGroup(group);
         return announcementRepository.save(announcement);
     }
 }

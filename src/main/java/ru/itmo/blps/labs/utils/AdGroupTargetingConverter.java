@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 import java.util.List;
+import ru.itmo.blps.labs.exception.CustomException;
+import ru.itmo.blps.labs.exception.ExceptionEnum;
 
 @Converter
 public class AdGroupTargetingConverter implements AttributeConverter<List<String>, String> {
@@ -16,7 +18,7 @@ public class AdGroupTargetingConverter implements AttributeConverter<List<String
         try {
             return objectMapper.writeValueAsString(attribute);
         } catch (Exception e) {
-            throw new RuntimeException("Failed to convert to JSON", e);
+            throw new CustomException(ExceptionEnum.SERVER_ERROR);
         }
     }
 
@@ -28,7 +30,8 @@ public class AdGroupTargetingConverter implements AttributeConverter<List<String
                 }
             );
         } catch (Exception e) {
-            throw new RuntimeException("Failed to convert from JSON", e);
+            e.printStackTrace();
+            throw new CustomException(ExceptionEnum.SERVER_ERROR);
         }
     }
 }
