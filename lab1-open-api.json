@@ -1,0 +1,1300 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "BLPS lab #1",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:37729",
+      "description": "Generated server url"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "paths": {
+    "/payment": {
+      "post": {
+        "tags": [
+          "payment-controller"
+        ],
+        "operationId": "createPaymentCard",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PaymentCardDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentCardDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/donutLevel": {
+      "post": {
+        "tags": [
+          "donut-level-controller"
+        ],
+        "operationId": "createDonutLevel",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DonutLevelDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DonutLevelDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/donutGoal": {
+      "post": {
+        "tags": [
+          "donut-goal-controller"
+        ],
+        "operationId": "createDonutGoal",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DonutGoalDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DonutGoalDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/community/activateDonuts/{communityId}": {
+      "post": {
+        "tags": [
+          "community-controller"
+        ],
+        "operationId": "activateDonuts",
+        "parameters": [
+          {
+            "name": "communityId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommunityDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/campaign": {
+      "post": {
+        "tags": [
+          "campaign-controller"
+        ],
+        "operationId": "createCampaign",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdCampaignDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdCampaignDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/token": {
+      "post": {
+        "tags": [
+          "auth-controller"
+        ],
+        "summary": "Обновить токены",
+        "operationId": "getNewTokens",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshJwtRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JwtResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/request": {
+      "post": {
+        "tags": [
+          "auth-controller"
+        ],
+        "summary": "Запросить код авторизации",
+        "operationId": "request",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/confirm": {
+      "post": {
+        "tags": [
+          "auth-controller"
+        ],
+        "summary": "Подтвердить код авторизации, получить токены",
+        "operationId": "confirm",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JwtRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JwtResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/confirm-qr": {
+      "post": {
+        "tags": [
+          "auth-controller"
+        ],
+        "summary": "Подтвердить QR-код, получить токены",
+        "operationId": "confirmQr",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JwtResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/confirm-email": {
+      "post": {
+        "tags": [
+          "auth-controller"
+        ],
+        "summary": "Авторизоваться по email",
+        "operationId": "confirmEmail",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JwtEmailPassRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JwtResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/announcement/{announcementId}/approveByUser": {
+      "post": {
+        "tags": [
+          "announcement-controller"
+        ],
+        "operationId": "approveByUser",
+        "parameters": [
+          {
+            "name": "announcementId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnnouncementDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/announcement/draft": {
+      "post": {
+        "tags": [
+          "announcement-controller"
+        ],
+        "operationId": "createAnnouncementAsDraft",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnnouncementDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnnouncementDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/announcement/created": {
+      "post": {
+        "tags": [
+          "announcement-controller"
+        ],
+        "operationId": "createAnnouncementAsCreated",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnnouncementDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnnouncementDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/advertising-cabinet": {
+      "post": {
+        "tags": [
+          "advertising-cabinet-controller"
+        ],
+        "operationId": "createAdvertisingCabinet",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdvertisingCabinetDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdvertisingCabinetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ad-group": {
+      "post": {
+        "tags": [
+          "ad-group-controller"
+        ],
+        "operationId": "createAdGroup",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdGroupDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdGroupDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/payment/{userId}": {
+      "get": {
+        "tags": [
+          "payment-controller"
+        ],
+        "operationId": "getPaymentCardsByUserId",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PaymentCardDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/donutLevel/{communityId}": {
+      "get": {
+        "tags": [
+          "donut-level-controller"
+        ],
+        "operationId": "getDonutLevelsByCommunityId",
+        "parameters": [
+          {
+            "name": "communityId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DonutLevelDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/donutGoal/{communityId}": {
+      "get": {
+        "tags": [
+          "donut-goal-controller"
+        ],
+        "operationId": "getDonutGoals",
+        "parameters": [
+          {
+            "name": "communityId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DonutGoalDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/community/{communityId}": {
+      "get": {
+        "tags": [
+          "community-controller"
+        ],
+        "operationId": "getCommunityById",
+        "parameters": [
+          {
+            "name": "communityId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommunityDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/campaign/{userId}": {
+      "get": {
+        "tags": [
+          "campaign-controller"
+        ],
+        "operationId": "getCampaignsByUserId",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AdCampaignDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/is-exist": {
+      "get": {
+        "tags": [
+          "auth-controller"
+        ],
+        "summary": "Проверить существование пользователя",
+        "operationId": "isExist",
+        "parameters": [
+          {
+            "name": "phone",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/generate-qr": {
+      "get": {
+        "tags": [
+          "auth-controller"
+        ],
+        "summary": "Сгенерировать QR-код для авторизации",
+        "operationId": "generateQr",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "byte"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/announcement/{groupId}": {
+      "get": {
+        "tags": [
+          "announcement-controller"
+        ],
+        "operationId": "getAnnouncementsByGroupId",
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AnnouncementDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/advertising-cabinet/{userId}": {
+      "get": {
+        "tags": [
+          "advertising-cabinet-controller"
+        ],
+        "operationId": "getAdvertisingCabinetByUserId",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AdvertisingCabinetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ad-type": {
+      "get": {
+        "tags": [
+          "ad-type-controller"
+        ],
+        "operationId": "getAllTypes",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AdTypeDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ad-group/{campaignId}": {
+      "get": {
+        "tags": [
+          "ad-group-controller"
+        ],
+        "operationId": "getAdGroupsByCampaignId",
+        "parameters": [
+          {
+            "name": "campaignId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AdGroupDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ad-goal": {
+      "get": {
+        "tags": [
+          "ad-goal-controller"
+        ],
+        "operationId": "getAll",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AdGoalDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "PaymentCardDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "readOnly": true
+          },
+          "token": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "token",
+          "type"
+        ]
+      },
+      "DonutLevelDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "readOnly": true
+          },
+          "amount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "communityId": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "required": [
+          "amount",
+          "communityId",
+          "description",
+          "title"
+        ]
+      },
+      "CommunityDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "readOnly": true
+          },
+          "name": {
+            "type": "string"
+          },
+          "isAllowedToMakeDonuts": {
+            "type": "boolean"
+          }
+        }
+      },
+      "DonutGoalDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "readOnly": true
+          },
+          "goal": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "community": {
+            "$ref": "#/components/schemas/CommunityDto",
+            "readOnly": true
+          },
+          "communityId": {
+            "type": "integer",
+            "format": "int64",
+            "writeOnly": true
+          }
+        },
+        "required": [
+          "communityId",
+          "description",
+          "goal",
+          "title"
+        ]
+      },
+      "AdCampaignDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "readOnly": true
+          },
+          "url": {
+            "type": "string"
+          },
+          "adGoal": {
+            "$ref": "#/components/schemas/AdGoalDto",
+            "readOnly": true
+          },
+          "adType": {
+            "$ref": "#/components/schemas/AdTypeDto",
+            "readOnly": true
+          },
+          "adGoalName": {
+            "type": "string",
+            "writeOnly": true
+          },
+          "adTypeName": {
+            "type": "string",
+            "writeOnly": true
+          },
+          "limitBudget": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ownerId": {
+            "type": "integer",
+            "format": "int64",
+            "readOnly": true
+          }
+        },
+        "required": [
+          "adGoalName",
+          "adTypeName",
+          "url"
+        ]
+      },
+      "AdGoalDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
+      "AdTypeDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "imgUrl": {
+            "type": "string"
+          }
+        }
+      },
+      "RefreshJwtRequest": {
+        "type": "object",
+        "properties": {
+          "refreshToken": {
+            "type": "string"
+          }
+        }
+      },
+      "JwtResponse": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "accessToken": {
+            "type": "string"
+          },
+          "refreshToken": {
+            "type": "string"
+          },
+          "register": {
+            "type": "boolean"
+          },
+          "userId": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "AuthRequest": {
+        "type": "object",
+        "properties": {
+          "phone": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "phone"
+        ]
+      },
+      "AuthResponse": {
+        "type": "object",
+        "properties": {
+          "register": {
+            "type": "boolean"
+          }
+        }
+      },
+      "JwtRequest": {
+        "type": "object",
+        "properties": {
+          "phone": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "phone"
+        ]
+      },
+      "JwtEmailPassRequest": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
+      },
+      "AdGroupDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "readOnly": true
+          },
+          "regions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "minAge": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "maxAge": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "interests": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "campaignId": {
+            "type": "integer",
+            "format": "int64",
+            "writeOnly": true
+          },
+          "allowDesktop": {
+            "type": "boolean"
+          },
+          "allowMobile": {
+            "type": "boolean"
+          },
+          "allowExpansionOfAudience": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "campaignId",
+          "interests",
+          "regions"
+        ]
+      },
+      "AnnouncementDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "readOnly": true
+          },
+          "adGroup": {
+            "$ref": "#/components/schemas/AdGroupDto",
+            "readOnly": true
+          },
+          "adGroupId": {
+            "type": "integer",
+            "format": "int64",
+            "writeOnly": true
+          },
+          "title": {
+            "type": "string"
+          },
+          "shortDescription": {
+            "type": "string"
+          },
+          "longDescription": {
+            "type": "string"
+          },
+          "textNearButton": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "textOnButton": {
+            "type": "string"
+          },
+          "imgUrl": {
+            "type": "string"
+          },
+          "advertiserInfo": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "DRAFT",
+              "CREATED",
+              "MODERATION",
+              "PUBLISHED"
+            ],
+            "readOnly": true
+          }
+        },
+        "required": [
+          "adGroupId",
+          "advertiserInfo",
+          "imgUrl",
+          "longDescription",
+          "shortDescription",
+          "textNearButton",
+          "textOnButton",
+          "title",
+          "url"
+        ]
+      },
+      "AdvertisingCabinetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "readOnly": true
+          },
+          "type": {
+            "type": "string",
+            "default": "ADVERTISER",
+            "enum": [
+              "ADVERTISER",
+              "AGENCY"
+            ]
+          },
+          "country": {
+            "type": "string",
+            "default": "RU"
+          },
+          "currency": {
+            "type": "string",
+            "default": "RUB"
+          },
+          "email": {
+            "type": "string",
+            "default": "primer@example.com"
+          },
+          "ownerType": {
+            "type": "string",
+            "default": "INDIVIDUAL",
+            "enum": [
+              "LEGAL_ENTITY",
+              "INDIVIDUAL"
+            ]
+          },
+          "inn": {
+            "type": "string"
+          },
+          "fullName": {
+            "type": "string"
+          },
+          "ownerId": {
+            "type": "integer",
+            "format": "int64",
+            "readOnly": true
+          },
+          "agreeToReceiveAds": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "country",
+          "currency",
+          "email",
+          "fullName",
+          "inn",
+          "ownerType",
+          "type"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "name": "bearerAuth",
+        "scheme": "Bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
