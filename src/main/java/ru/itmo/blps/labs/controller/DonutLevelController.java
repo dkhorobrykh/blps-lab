@@ -1,5 +1,6 @@
 package ru.itmo.blps.labs.controller;
 
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +29,7 @@ public class DonutLevelController {
     }
 
     @PostMapping
-    public ResponseEntity<DonutLevelDto> createDonutLevel(@RequestBody DonutLevelDto donutLevelDto) {
+    public ResponseEntity<DonutLevelDto> createDonutLevel(@RequestBody @Valid DonutLevelDto donutLevelDto) {
         var donutLevel = donutLevelMapper.toEntity(donutLevelDto);
         var result = donutLevelService.createDonutLevel(donutLevel);
         return ResponseEntity.ok(donutLevelMapper.toDto(result));

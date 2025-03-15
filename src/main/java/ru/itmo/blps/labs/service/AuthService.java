@@ -68,6 +68,14 @@ public class AuthService {
 
         boolean register = userOptional.isEmpty();
 
+        var user = userService.findByPhone(phoneNumber);
+        if (user.isEmpty()) {
+            var newUser = new User();
+            newUser.setPhone(phoneNumber);
+            newUser.setName(authRequest.getName());
+            userService.save(newUser);
+        }
+
         sendAuthCode(phoneNumber, register);
 
         return new AuthResponse(register);
@@ -116,14 +124,6 @@ public class AuthService {
 
         saveAttempt(phoneNumber);
 
-        var user = userService.findByPhone(phoneNumber);
-        if (user.isEmpty()) {
-            var newUser = new User();
-            newUser.setPhone(phoneNumber);
-            newUser.setName(jwtRequest.getName());
-            userService.save(newUser);
-        }
-
         return checkCodeAndGetJwtResponse(phoneNumber, code);
     }
 
@@ -136,7 +136,7 @@ public class AuthService {
         saveRefreshToken(user.getId(), refreshToken);
 
         authCodeStorage.remove(user.getPhone());
-        return new JwtResponse(accessToken, refreshToken, false);
+        return new JwtResponse(accessToken, refreshToken, false, user.getId());
     }
 
     private void saveAttempt(String phoneNumber) {
@@ -170,7 +170,7 @@ public class AuthService {
             saveRefreshToken(user.getId(), refreshToken);
 
             authCodeStorage.remove(user.getPhone());
-            return new JwtResponse(accessToken, refreshToken, register);
+            return new JwtResponse(accessToken, refreshToken, register, user.getId());
         } else {
             throw new CustomException(ExceptionEnum.INCORRECT_AUTH_CODE);
         }
@@ -195,7 +195,7 @@ public class AuthService {
                 oldToken.setRefreshToken(newRefreshToken);
                 refreshStorageRepository.saveAndFlush(oldToken);
 
-                return new JwtResponse(accessToken, newRefreshToken, null);
+                return new JwtResponse(accessToken, newRefreshToken, null, user.getId());
             }
         }
         throw new CustomException(ExceptionEnum.INVALID_JWT_TOKEN);
@@ -230,7 +230,7 @@ public class AuthService {
 
         saveRefreshToken(user.getId(), refreshToken);
 
-        return new JwtResponse(accessToken, refreshToken, false);
+        return new JwtResponse(accessToken, refreshToken, false, user.getId());
     }
 
     public boolean isExist(String phone) {

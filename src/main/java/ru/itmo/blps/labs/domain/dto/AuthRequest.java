@@ -1,5 +1,7 @@
 package ru.itmo.blps.labs.domain.dto;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,5 +9,8 @@ import lombok.Setter;
 @Getter
 public class AuthRequest {
 
+    @NotNull
+    @NotEmpty
     private String phone;
+    private String name;
 }

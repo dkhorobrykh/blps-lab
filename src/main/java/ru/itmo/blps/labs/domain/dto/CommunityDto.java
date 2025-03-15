@@ -14,5 +14,5 @@ public class CommunityDto implements Serializable {
     @Schema(accessMode = AccessMode.READ_ONLY)
     Long id;
     String name;
-    boolean isAllowedToMakeDonuts;
+    Boolean isAllowedToMakeDonuts;
 }

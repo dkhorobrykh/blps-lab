@@ -32,8 +32,8 @@ public class AnnouncementService {
     public Announcement approveByUser(Long announcementId) {
         var announcement = announcementRepository.findById(announcementId).orElseThrow(() -> new CustomException(
             ExceptionEnum.NOT_FOUND));
-        if (announcement.getStatus() != AnnouncementStatus.CREATED) {
-            throw new CustomException(ExceptionEnum.ANNOUNCEMENT_IS_NOT_IN_CREATED_STATUS);
+        if (announcement.getStatus() != AnnouncementStatus.CREATED && announcement.getStatus() != AnnouncementStatus.DRAFT) {
+            throw new CustomException(ExceptionEnum.ANNOUNCEMENT_IS_NOT_IN_CREATED_OR_DRAFT_STATUS);
         }
         announcement.setStatus(AnnouncementStatus.MODERATION);
         var group = groupService.getById(announcement.getGroup().getId());

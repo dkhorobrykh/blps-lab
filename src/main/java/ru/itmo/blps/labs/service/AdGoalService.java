@@ -1,5 +1,6 @@
 package ru.itmo.blps.labs.service;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,5 +19,9 @@ public class AdGoalService {
     public AdGoal getByName(String name) {
         return adGoalRepository.findByName(name)
                 .orElseThrow(() -> new CustomException(ExceptionEnum.NOT_FOUND));
+    }
+
+    public List<AdGoal> getAll() {
+        return adGoalRepository.findAll();
     }
 }

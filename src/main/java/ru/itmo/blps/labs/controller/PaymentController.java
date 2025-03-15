@@ -1,5 +1,6 @@
 package ru.itmo.blps.labs.controller;
 
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +29,7 @@ public class PaymentController {
     }
 
     @PostMapping
-    public ResponseEntity<PaymentCardDto> createPaymentCard(@RequestBody PaymentCardDto paymentCardDto) {
+    public ResponseEntity<PaymentCardDto> createPaymentCard(@RequestBody @Valid PaymentCardDto paymentCardDto) {
         var paymentCard = paymentCardMapper.toEntity(paymentCardDto);
         var result = paymentCardService.createPaymentCard(paymentCard);
         return ResponseEntity.ok(paymentCardMapper.toDto(result));

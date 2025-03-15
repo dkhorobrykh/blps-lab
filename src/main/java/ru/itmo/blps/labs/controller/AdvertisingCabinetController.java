@@ -1,5 +1,6 @@
 package ru.itmo.blps.labs.controller;
 
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +29,7 @@ public class AdvertisingCabinetController {
     }
 
     @PostMapping
-    public ResponseEntity<AdvertisingCabinetDto> createAdvertisingCabinet(@RequestBody AdvertisingCabinetDto advertisingCabinetDto) {
+    public ResponseEntity<AdvertisingCabinetDto> createAdvertisingCabinet(@RequestBody @Valid AdvertisingCabinetDto advertisingCabinetDto) {
         var result = advertisingCabinetService.create(advertisingCabinetMapper.toEntity(advertisingCabinetDto));
         return ResponseEntity.ok(advertisingCabinetMapper.toDto(result));
     }

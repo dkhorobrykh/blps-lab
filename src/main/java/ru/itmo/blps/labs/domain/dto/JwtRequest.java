@@ -1,6 +1,8 @@
 package ru.itmo.blps.labs.domain.dto;
 
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,8 +10,11 @@ import lombok.Setter;
 @Getter
 public class JwtRequest {
 
+    @NotNull
+    @NotEmpty
     private String phone;
+    @NotNull
+    @NotEmpty
     private String code;
-    private String name;
 
 }

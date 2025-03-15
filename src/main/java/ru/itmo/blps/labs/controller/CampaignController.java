@@ -1,5 +1,6 @@
 package ru.itmo.blps.labs.controller;
 
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.itmo.blps.labs.domain.AdCampaign;
 import ru.itmo.blps.labs.domain.dto.AdCampaignDto;
 import ru.itmo.blps.labs.domain.mapper.AdCampaignMapper;
 import ru.itmo.blps.labs.service.AdCampaignService;
@@ -23,7 +23,7 @@ public class CampaignController {
     private final AdCampaignService adCampaignService;
 
     @PostMapping
-    public ResponseEntity<AdCampaignDto> createCampaign(@RequestBody AdCampaignDto adCampaignDto) {
+    public ResponseEntity<AdCampaignDto> createCampaign(@RequestBody @Valid AdCampaignDto adCampaignDto) {
         var result = adCampaignService.createCampaign(adCampaignMapper.toEntity(adCampaignDto));
         return ResponseEntity.ok(adCampaignMapper.toDto(result));
     }

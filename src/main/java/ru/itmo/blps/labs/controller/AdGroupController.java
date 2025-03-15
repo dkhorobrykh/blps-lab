@@ -1,5 +1,6 @@
 package ru.itmo.blps.labs.controller;
 
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +30,7 @@ public class AdGroupController {
     }
 
     @PostMapping
-    public ResponseEntity<AdGroupDto> createAdGroup(@RequestBody AdGroupDto adGroupDto) {
+    public ResponseEntity<AdGroupDto> createAdGroup(@RequestBody @Valid AdGroupDto adGroupDto) {
         var result = adGroupService.create(adGroupMapper.toEntity(adGroupDto));
         return ResponseEntity.ok(adGroupMapper.toDto(result));
     }

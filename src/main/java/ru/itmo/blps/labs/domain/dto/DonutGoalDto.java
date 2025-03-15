@@ -2,6 +2,9 @@ package ru.itmo.blps.labs.domain.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import java.io.Serializable;
 import lombok.Value;
 
@@ -13,11 +16,18 @@ public class DonutGoalDto implements Serializable {
 
     @Schema(accessMode = AccessMode.READ_ONLY)
     Long id;
+    @Positive
+    @NotNull
     Integer goal;
+    @NotNull
+    @NotEmpty
     String title;
+    @NotNull
+    @NotEmpty
     String description;
     @Schema(accessMode = AccessMode.READ_ONLY)
     CommunityDto community;
     @Schema(accessMode = AccessMode.WRITE_ONLY)
+    @NotNull
     Long communityId;
 }

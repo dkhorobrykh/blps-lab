@@ -1,5 +1,6 @@
 package ru.itmo.blps.labs.controller;
 
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -29,16 +30,18 @@ public class AnnouncementController {
     }
 
     @PostMapping("draft")
-    public ResponseEntity<AnnouncementDto> createAnnouncementAsDraft(@RequestBody AnnouncementDto announcementDto) {
-        var result = announcementService.createAnnouncement(announcementMapper.toEntity(announcementDto),
+    public ResponseEntity<AnnouncementDto> createAnnouncementAsDraft(@RequestBody @Valid AnnouncementDto announcementDto) {
+        var result = announcementService.createAnnouncement(
+            announcementMapper.toEntity(announcementDto),
             AnnouncementStatus.DRAFT
         );
         return ResponseEntity.ok(announcementMapper.toDto(result));
     }
 
     @PostMapping("created")
-    public ResponseEntity<AnnouncementDto> createAnnouncementAsCreated(@RequestBody AnnouncementDto announcementDto) {
-        var result = announcementService.createAnnouncement(announcementMapper.toEntity(announcementDto),
+    public ResponseEntity<AnnouncementDto> createAnnouncementAsCreated(@RequestBody @Valid AnnouncementDto announcementDto) {
+        var result = announcementService.createAnnouncement(
+            announcementMapper.toEntity(announcementDto),
             AnnouncementStatus.CREATED
         );
         return ResponseEntity.ok(announcementMapper.toDto(result));

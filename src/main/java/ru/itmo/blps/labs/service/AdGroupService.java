@@ -19,7 +19,6 @@ public class AdGroupService {
     private final AdCampaignService adCampaignService;
 
     public List<AdGroup> getAdGroupsByCampaignId(Long campaignId) {
-        log.info("Getting ad groups by campaign id: {}", campaignId);
         return adGroupRepository.findByAdCampaignId(campaignId);
     }
 

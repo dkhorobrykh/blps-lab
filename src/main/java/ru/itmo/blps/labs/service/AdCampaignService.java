@@ -24,6 +24,9 @@ public class AdCampaignService {
         adCampaign.setAdType(adType);
         var adGoal = adGoalService.getByName(adCampaign.getAdGoal().getName());
         adCampaign.setAdGoal(adGoal);
+        if (adCampaign.getEndDate().isBefore(adCampaign.getStartDate())) {
+            throw new CustomException(ExceptionEnum.INVALID_DATE);
+        }
         return adCampaignRepository.save(adCampaign);
     }
 

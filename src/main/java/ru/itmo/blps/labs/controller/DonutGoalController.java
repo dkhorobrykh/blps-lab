@@ -1,5 +1,6 @@
 package ru.itmo.blps.labs.controller;
 
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,7 @@ public class DonutGoalController {
     }
 
     @PostMapping
-    public ResponseEntity<DonutGoalDto> createDonutGoal(@RequestBody DonutGoalDto donutGoalDto) {
+    public ResponseEntity<DonutGoalDto> createDonutGoal(@RequestBody @Valid DonutGoalDto donutGoalDto) {
         var donutGoal = donutGoalMapper.toEntity(donutGoalDto);
         var result = donutGoalService.createDonutGoal(donutGoal);
         return ResponseEntity.ok(donutGoalMapper.toDto(result));
