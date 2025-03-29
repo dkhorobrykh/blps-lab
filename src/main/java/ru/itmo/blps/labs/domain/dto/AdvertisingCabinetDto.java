@@ -20,7 +20,6 @@ public class AdvertisingCabinetDto implements Serializable {
     Long id;
     @Schema(defaultValue = "ADVERTISER")
     @NotNull
-    @NotEmpty
     AdvertisingCabinetType type;
     @Schema(defaultValue = "RU")
     @NotNull
@@ -36,7 +35,6 @@ public class AdvertisingCabinetDto implements Serializable {
     String email;
     @Schema(defaultValue = "INDIVIDUAL")
     @NotNull
-    @NotEmpty
     AdvertisingCabinetOwnerType ownerType;
     @NotNull
     @NotEmpty
