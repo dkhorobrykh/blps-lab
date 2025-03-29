@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.Instant;
 import lombok.Value;
@@ -19,6 +20,7 @@ public class AdCampaignDto implements Serializable {
     Long id;
     @NotNull
     @NotEmpty
+    @Size(max = 255)
     String url;
     @Schema(accessMode = AccessMode.READ_ONLY)
     AdGoalDto adGoal;
@@ -27,10 +29,12 @@ public class AdCampaignDto implements Serializable {
     @Schema(accessMode = AccessMode.WRITE_ONLY)
     @NotNull
     @NotEmpty
+    @Size(max = 255)
     String adGoalName;
     @Schema(accessMode = AccessMode.WRITE_ONLY)
     @NotNull
     @NotEmpty
+    @Size(max = 255)
     String adTypeName;
     @Positive
     Integer limitBudget;

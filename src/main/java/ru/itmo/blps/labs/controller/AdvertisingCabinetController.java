@@ -9,21 +9,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.itmo.blps.labs.domain.dto.AdvertisingCabinetDto;
 import ru.itmo.blps.labs.domain.mapper.AdvertisingCabinetMapper;
 import ru.itmo.blps.labs.service.AdvertisingCabinetService;
 
 @RestController
-@RequestMapping("/advertising-cabinet")
+@RequestMapping("/advertising-cabinets")
 @AllArgsConstructor
 public class AdvertisingCabinetController {
 
     private final AdvertisingCabinetMapper advertisingCabinetMapper;
     private final AdvertisingCabinetService advertisingCabinetService;
 
-    @GetMapping("{userId}")
-    public ResponseEntity<List<AdvertisingCabinetDto>> getAdvertisingCabinetByUserId(@PathVariable  Long userId) {
+    @GetMapping
+    public ResponseEntity<List<AdvertisingCabinetDto>> getAdvertisingCabinetByUserId(@RequestParam Long userId) {
         var result = advertisingCabinetService.getByOwnerId(userId);
         return ResponseEntity.ok(advertisingCabinetMapper.toDto(result));
     }

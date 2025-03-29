@@ -33,6 +33,7 @@ import ru.itmo.blps.labs.domain.dto.JwtResponse;
 import ru.itmo.blps.labs.exception.CustomException;
 import ru.itmo.blps.labs.exception.ExceptionEnum;
 import ru.itmo.blps.labs.repository.RefreshStorageRepository;
+import ru.itmo.blps.labs.security.UserPrincipal;
 import ru.itmo.blps.labs.utils.PasswordHash;
 import ru.itmo.blps.labs.utils.QrCodeGenerator;
 
@@ -52,8 +53,8 @@ public class AuthService {
 
     public static Long getCurrentUserId() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null && auth.getPrincipal() instanceof CustomUserDetails user) {
-            return user.getUser().getId();
+        if (auth != null && auth.getPrincipal() instanceof UserPrincipal user) {
+            return Long.parseLong(user.getName());
         }
         return null;
     }
@@ -233,8 +234,8 @@ public class AuthService {
         return new JwtResponse(accessToken, refreshToken, false, user.getId());
     }
 
-    public boolean isExist(String phone) {
-        return userService.findByPhone(phone).isPresent();
+    public User isExist(String phone) {
+        return userService.findByPhone(phone).orElseThrow(() -> new CustomException(ExceptionEnum.USER_NOT_FOUND));
     }
 }
 

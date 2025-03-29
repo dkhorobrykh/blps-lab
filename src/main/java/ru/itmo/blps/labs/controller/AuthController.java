@@ -27,7 +27,10 @@ import ru.itmo.blps.labs.domain.dto.JwtEmailPassRequest;
 import ru.itmo.blps.labs.domain.dto.JwtRequest;
 import ru.itmo.blps.labs.domain.dto.JwtResponse;
 import ru.itmo.blps.labs.domain.dto.RefreshJwtRequest;
+import ru.itmo.blps.labs.exception.CustomException;
+import ru.itmo.blps.labs.exception.ExceptionEnum;
 import ru.itmo.blps.labs.service.AuthService;
+import ru.itmo.blps.labs.service.UserService;
 import ru.itmo.blps.labs.utils.PasswordHash;
 
 @RestController
@@ -37,6 +40,7 @@ import ru.itmo.blps.labs.utils.PasswordHash;
 public class AuthController {
 
     private final AuthService authService;
+    private final UserService userService;
 
     @PostMapping("request")
     @Operation(summary = "Запросить код авторизации")
@@ -89,9 +93,9 @@ public class AuthController {
 
     @GetMapping("is-exist")
     @Operation(summary = "Проверить существование пользователя")
-    public ResponseEntity<Boolean> isExist(@RequestParam String phone) {
-        final boolean isExist = authService.isExist(phone);
-        return ResponseEntity.ok(isExist);
+    public ResponseEntity<?> isExist(@RequestParam String phone) {
+        userService.findByPhone(phone).orElseThrow(() -> new CustomException(ExceptionEnum.USER_NOT_FOUND));
+        return ResponseEntity.ok(null);
     }
 
 }

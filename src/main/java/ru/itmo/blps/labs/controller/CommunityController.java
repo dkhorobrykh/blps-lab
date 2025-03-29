@@ -25,7 +25,7 @@ public class CommunityController {
         return ResponseEntity.ok(communityMapper.toDto(result));
     }
 
-    @PostMapping("activateDonuts/{communityId}")
+    @PostMapping("{communityId}/donuts-status")
     public ResponseEntity<CommunityDto> activateDonuts(@PathVariable Long communityId) {
         var result = communityService.activateDonuts(communityId);
         return ResponseEntity.ok(communityMapper.toDto(result));

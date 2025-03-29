@@ -23,6 +23,7 @@ public enum ExceptionEnum {
     INVALID_SIGNATURE("Неверная подпись", HttpStatus.UNAUTHORIZED),
     INCORRECT_PASSWORD("Неверный пароль", HttpStatus.BAD_REQUEST),
     INVALID_DATE("Некорректная дата", HttpStatus.BAD_REQUEST),
+    ANNOUNCEMENT_IS_NOT_IN_MODERATION_STATUS("Объявление не находится в статусе MODERATION", HttpStatus.BAD_REQUEST),
 
     SERVER_ERROR("", HttpStatus.INTERNAL_SERVER_ERROR);
 

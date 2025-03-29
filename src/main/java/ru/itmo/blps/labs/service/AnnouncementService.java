@@ -18,6 +18,10 @@ public class AnnouncementService {
     private final AnnouncementRepository announcementRepository;
     private final AdGroupService groupService;
 
+    public Announcement getById(Long id) {
+        return announcementRepository.findById(id).orElseThrow(() -> new CustomException(ExceptionEnum.NOT_FOUND));
+    }
+
     public List<Announcement> getAnnouncementsByGroupId(Long groupId) {
         return announcementRepository.findAllByGroupId(groupId);
     }
@@ -30,14 +34,42 @@ public class AnnouncementService {
     }
 
     public Announcement approveByUser(Long announcementId) {
-        var announcement = announcementRepository.findById(announcementId).orElseThrow(() -> new CustomException(
-            ExceptionEnum.NOT_FOUND));
-        if (announcement.getStatus() != AnnouncementStatus.CREATED && announcement.getStatus() != AnnouncementStatus.DRAFT) {
+        var announcement = announcementRepository
+            .findById(announcementId)
+            .orElseThrow(() -> new CustomException(ExceptionEnum.NOT_FOUND));
+        if (announcement.getStatus() != AnnouncementStatus.CREATED &&
+            announcement.getStatus() != AnnouncementStatus.DRAFT) {
             throw new CustomException(ExceptionEnum.ANNOUNCEMENT_IS_NOT_IN_CREATED_OR_DRAFT_STATUS);
         }
         announcement.setStatus(AnnouncementStatus.MODERATION);
         var group = groupService.getById(announcement.getGroup().getId());
         announcement.setGroup(group);
         return announcementRepository.save(announcement);
+    }
+
+    public Announcement getUncheckedAnnouncement() {
+        var announcement = announcementRepository.findAllByStatusOrderById(AnnouncementStatus.MODERATION);
+        if (announcement.isEmpty()) {
+            throw new CustomException(ExceptionEnum.NOT_FOUND);
+        }
+        return announcement.get(0);
+    }
+
+    public Announcement approve(Long announcementId) {
+        var announcement = getById(announcementId);
+        if (announcement.getStatus() != AnnouncementStatus.MODERATION) {
+            throw new CustomException(ExceptionEnum.ANNOUNCEMENT_IS_NOT_IN_MODERATION_STATUS);
+        }
+        announcement.setStatus(AnnouncementStatus.PUBLISHED);
+        return announcementRepository.saveAndFlush(announcement);
+    }
+
+    public Announcement reject(Long announcementId) {
+        var announcement = getById(announcementId);
+        if (announcement.getStatus() != AnnouncementStatus.MODERATION) {
+            throw new CustomException(ExceptionEnum.ANNOUNCEMENT_IS_NOT_IN_MODERATION_STATUS);
+        }
+        announcement.setStatus(AnnouncementStatus.REJECTED);
+        return announcementRepository.saveAndFlush(announcement);
     }
 }

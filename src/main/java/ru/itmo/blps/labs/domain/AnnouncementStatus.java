@@ -5,4 +5,5 @@ public enum AnnouncementStatus {
     CREATED,
     MODERATION,
     PUBLISHED,
+    REJECTED
 }

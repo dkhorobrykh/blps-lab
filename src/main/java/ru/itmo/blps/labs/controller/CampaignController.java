@@ -9,13 +9,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.itmo.blps.labs.domain.dto.AdCampaignDto;
 import ru.itmo.blps.labs.domain.mapper.AdCampaignMapper;
 import ru.itmo.blps.labs.service.AdCampaignService;
 
 @RestController
-@RequestMapping("/campaign")
+@RequestMapping("/campaigns")
 @AllArgsConstructor
 public class CampaignController {
 
@@ -28,8 +29,8 @@ public class CampaignController {
         return ResponseEntity.ok(adCampaignMapper.toDto(result));
     }
 
-    @GetMapping("{userId}")
-    public ResponseEntity<List<AdCampaignDto>> getCampaignsByUserId(@PathVariable Long userId) {
+    @GetMapping
+    public ResponseEntity<List<AdCampaignDto>> getCampaignsByUserId(@RequestParam Long userId) {
         var result = adCampaignService.getCampaignsByUserId(userId);
         return ResponseEntity.ok(adCampaignMapper.toDto(result));
     }

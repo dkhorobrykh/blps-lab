@@ -9,21 +9,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.itmo.blps.labs.domain.dto.PaymentCardDto;
 import ru.itmo.blps.labs.domain.mapper.PaymentCardMapper;
 import ru.itmo.blps.labs.service.PaymentCardService;
 
 @RestController
-@RequestMapping("/payment")
+@RequestMapping("/payments")
 @AllArgsConstructor
 public class PaymentController {
 
     private final PaymentCardService paymentCardService;
     private final PaymentCardMapper paymentCardMapper;
 
-    @GetMapping("{userId}")
-    public ResponseEntity<List<PaymentCardDto>> getPaymentCardsByUserId(@PathVariable Long userId) {
+    @GetMapping
+    public ResponseEntity<List<PaymentCardDto>> getPaymentCardsByUserId(@RequestParam Long userId) {
         var result = paymentCardService.getPaymentCardsByUserId(userId);
         return ResponseEntity.ok(paymentCardMapper.toDto(result));
     }

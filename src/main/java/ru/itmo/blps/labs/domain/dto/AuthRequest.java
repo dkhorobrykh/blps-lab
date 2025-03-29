@@ -12,6 +12,7 @@ public class AuthRequest {
 
     @NotNull
     @NotEmpty
+    @Size(max = 11)
     private String phone;
     @Size(max = 255)
     private String name;

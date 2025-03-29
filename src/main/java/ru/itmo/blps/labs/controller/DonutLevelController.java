@@ -9,21 +9,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.itmo.blps.labs.domain.dto.DonutLevelDto;
 import ru.itmo.blps.labs.domain.mapper.DonutLevelMapper;
 import ru.itmo.blps.labs.service.DonutLevelService;
 
 @RestController
-@RequestMapping("/donutLevel")
+@RequestMapping("/donut-levels")
 @AllArgsConstructor
 public class DonutLevelController {
 
     private final DonutLevelMapper donutLevelMapper;
     private final DonutLevelService donutLevelService;
 
-    @GetMapping("{communityId}")
-    public ResponseEntity<List<DonutLevelDto> > getDonutLevelsByCommunityId(@PathVariable  Long communityId) {
+    @GetMapping
+    public ResponseEntity<List<DonutLevelDto> > getDonutLevelsByCommunityId(@RequestParam Long communityId) {
         var result = donutLevelService.getDonutLevelsByCommunityId(communityId);
         return ResponseEntity.ok(donutLevelMapper.toDto(result));
     }

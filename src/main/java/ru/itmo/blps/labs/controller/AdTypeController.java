@@ -11,7 +11,7 @@ import ru.itmo.blps.labs.domain.mapper.AdTypeMapper;
 import ru.itmo.blps.labs.service.AdTypeService;
 
 @RestController
-@RequestMapping("/ad-type")
+@RequestMapping("/ad-types")
 @AllArgsConstructor
 public class AdTypeController {
 

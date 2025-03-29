@@ -23,6 +23,10 @@ public class UserService {
         return userRepository.findByPhone(phone);
     }
 
+    public User getByPhone(String phone) {
+        return userRepository.findByPhone(phone).orElseThrow(() -> new CustomException(ExceptionEnum.USER_NOT_FOUND));
+    }
+
     public User save(User user) {
         return userRepository.saveAndFlush(user);
     }
